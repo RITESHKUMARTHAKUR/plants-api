@@ -1,7 +1,12 @@
 const mongoose = require("mongoose");
 
 const plantsSchema = new mongoose.Schema({
-  name: {
+  date: {
+    type: Date,
+    default: Date.now,
+    required: true
+  },
+  plantname: {
     type: String,
     required: true,
   },
@@ -17,13 +22,6 @@ const plantsSchema = new mongoose.Schema({
   desc: {
     type: String,
     required: true,
-  },
-  email: {
-    type: String,
-  },
-
-  size: {
-    type: String
   },
   space: {
     type: String,
@@ -44,4 +42,4 @@ const plantsSchema = new mongoose.Schema({
 });
 
 
-module.exports = mongoose.model("Plant", plantsSchema)
+module.exports = mongoose.model("plants", plantsSchema)
