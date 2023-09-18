@@ -18,7 +18,7 @@ function App() {
   const addUrl = `${process.env.REACT_APP_API_BASE_URL}/add`;
 
   // console.log(apiUrl)
-  console.log(addUrl)
+  // console.log(addUrl)
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -37,9 +37,7 @@ function App() {
       );
       
     } catch (error) {
-      console.log("frontend error")
-      console.log(error)
-      
+      console.log(error)  
     }
   }
   return (
@@ -47,9 +45,6 @@ function App() {
       <div className="bg-green-300 w-full py-4 ">
         <p className="text-center font-bold">
           PLANTS API
-        </p>
-        <p>
-          {addUrl}
         </p>
       </div>
       <div className="pt-6 md:flex-row md:pt-20 w-[80%] md:flex md:gap-20">
