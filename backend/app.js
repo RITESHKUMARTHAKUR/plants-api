@@ -79,7 +79,6 @@ app.post("/add" , async (req, res) => {
     const { plantname,  category   ,commonname,desc,space,sunlight,temperature,watering  } = req.body;
     
     const newUser = await User({ plantname, category,commonname,desc,space,sunlight,temperature,watering})
-    console.log(newUser)
     await newUser.save();
 });
 
