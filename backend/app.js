@@ -31,7 +31,7 @@ app.get("/", (req,res) => {
 });
 
 const plantsSchema = new mongoose.Schema({
-    plantname: {
+    name: {
       type: String,
       required: true,
     },
@@ -47,6 +47,10 @@ const plantsSchema = new mongoose.Schema({
     desc: {
       type: String,
       required: true,
+    },
+    size: {
+      type: String,
+      default: "wide"
     },
     space: {
       type: String,
@@ -71,16 +75,72 @@ const plantsSchema = new mongoose.Schema({
     },
 });
 
+const getPlantsSchema = new mongoose.Schema({
+  name: {
+    type: String,
+  },
+})
+
 const User = mongoose.model("plants", plantsSchema)
 
+const getPlants = mongoose.model("getPlants", getPlantsSchema)
 
 
-app.post("/add" , async (req, res) => {
-    const { plantname,  category   ,commonname,desc,space,sunlight,temperature,watering  } = req.body;
-    
-    const newUser = await User({ plantname, category,commonname,desc,space,sunlight,temperature,watering})
-    await newUser.save();
+
+// app.post("/add" , async (req, res) => {
+//     // const { name,category,commonname,desc,size,space,sunlight,temperature,watering  } = req.body;
+//     const {name} = req.query;
+
+//     res.json({name});
+//     // const existingDoc = await User.findOne({name: { $regex: new RegExp(name, 'i')  }});
+
+//     // if(existingDoc){
+//     //   // const newUser = await User({ name, category,commonname,desc,size,space,sunlight,temperature,watering,date})
+//     //   // await newUser.save();
+//     //   res.status(400).json(existingDoc);
+//     // }
+//     // else{
+//     //   res.status(200).json("Plant added Successfully")
+//     // }
+// });
+
+app.post("/add", async (req, res) => {
+
+  const { name,category,commonname,desc,size,space,sunlight,temperature,watering  } = req.body;
+  const {date} = plantsSchema
+  const plantDoc = await User.findOne({name: { $regex: new RegExp(name, 'i')  }});
+
+  if (plantDoc) {
+      return res.status(400).json("Plant exist");
+  }
+  else{
+    try {
+      const newUser = await User({ name, category,commonname,desc,size,space,sunlight,temperature,watering,date})
+      await newUser.save();
+      res.status(200).json("Plant Added");
+
+    } catch (error) {
+      console.log(error);
+      res.status(400).send(error);
+    }
+  }
 });
+
+app.get("/getPlants", async(req,res) => {
+  const {name} = req.query;
+  // res.json({name: `${name}`})
+  // const plantDoc = await User.findOne({name});
+
+  const plantDoc = await User.findOne({name: { $regex: new RegExp(name, 'i')  }});
+  
+  if (plantDoc){
+    console.log(plantDoc)
+    res.status(200).json(plantDoc);
+  }else{
+    res.status(400).json("Not found");
+  }
+
+})
 
 
 
