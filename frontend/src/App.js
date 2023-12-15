@@ -17,12 +17,17 @@ function App() {
 
 
   const addUrl = `${process.env.REACT_APP_API_BASE_URL}/add`;
-  const testAddUrl = `${process.env.REACT_APP_API_TEST_URL}add`;
+  const testAddUrl = `${process.env.REACT_APP_API_TEST_URL}/add`;
   const getUrl = `${process.env.REACT_APP_API_BASE_URL}/getPlants`;
+  const getAllUrl = `${process.env.REACT_APP_API_BASE_URL}/getAllPlants`;
   const testGetUrl = `${process.env.REACT_APP_API_TEST_URL}/getPlants`;
 
   // console.log(apiUrl)
+  // console.log(testAddUrl)
+  // console.log(testGetUrl)
+  // console.log("Add Url: ")
   // console.log(addUrl)
+  // console.log(getUrl)
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -37,7 +42,9 @@ function App() {
       body: JSON.stringify(plantData),
     })
 
-    if(addData.status == 200){
+    // console.log(addData.status)
+
+    if(addData.status === 200){
       alert("Plant added Successfully")
     }
     else{
@@ -45,34 +52,35 @@ function App() {
     }
   }
 
-  const getPlants = async (e) => {
-    e.preventDefault();
-    try {
-      await fetch(getUrl,{
-        method: 'GET',
-        headers: {
-          "Content-Type" : "application/json",
-        },
-        body: JSON.stringify()
+  // const getPlants = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     await fetch(getUrl,{
+  //       method: 'GET',
+  //       headers: {
+  //         "Content-Type" : "application/json",
+  //       },
+  //       body: JSON.stringify()
 
-      }).then(data => {
-        console.log(data);
-      })
-    } catch (error) {
-      alert("Not Found")
-    }
-  }
+  //     }).then(data => {
+  //       console.log(data);
+  //     })
+  //   } catch (error) {
+  //     alert("Not Found")
+  //   }
+  // }
+
   return (
     <div className=" font-poppins h-screen flex flex-col items-center ">
       <div className="bg-green-300 w-full py-4 ">
         <p className="text-center font-bold">
           PLANTS API
         </p>
-        <p>
-          {addUrl}
+        <p className="text-[0.7em]">
+          {getAllUrl}
         </p>
       </div>
-      <div className="pt-6 md:flex-row md:pt-20 w-[80%] md:flex md:gap-20">
+      <div className="pt-6 md:flex-row md:pt-8 w-[80%] md:flex md:gap-20">
         <div className=" flex flex-col  md:w-1/2">
           <div>
             <p>Name</p>
@@ -87,8 +95,8 @@ function App() {
             <input className={`${styles}`} onChange={(e) => setCommonName(e.target.value) } type="text" />
           </div>
           <div>
-            <p>desc</p>
-            <input className={`${styles}`} onChange={(e) => setDesc(e.target.value) } type="text" />
+            <p>Description</p>
+            <textarea className={`${styles} h-full`} onChange={(e) => setDesc(e.target.value) } type="text" />
           </div>
         </div>
         <div className=" flex flex-col  md:w-1/2">
@@ -101,7 +109,7 @@ function App() {
             <input className={`${styles}`} onChange={(e) => setSpace(e.target.value) } type="text" />
           </div>
           <div>
-            <p>sunlight</p>
+            <p>Sunlight</p>
             <input className={`${styles}`} onChange={(e) => setSunlight(e.target.value) } type="text" />
           </div>
           <div>
@@ -109,15 +117,15 @@ function App() {
             <input className={`${styles}`} onChange={(e) => setTemp(e.target.value) }  type="text" />
           </div>
           <div>
-            <p>watering</p>
+            <p>Watering</p>
             <input className={`${styles}`} onChange={(e) => setWatering(e.target.value) } type="text" />
           </div>
         </div>
       </div>
       <button className="mt-4 border-black border-2 w-[40%] py-2 font-bold rounded-[0.2em]" onClick={handleClick}>Submit</button>
-      <button onClick={getPlants}>
+      {/* <button onClick={getPlants}>
         Get Plants
-      </button>
+      </button> */}
     </div>
     
   );

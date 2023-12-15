@@ -120,7 +120,6 @@ app.post("/add", async (req, res) => {
       res.status(200).json("Plant Added");
 
     } catch (error) {
-      console.log(error);
       res.status(400).send(error);
     }
   }
@@ -140,7 +139,20 @@ app.get("/getPlants", async(req,res) => {
     res.status(400).json("Not found");
   }
 
-})
+});
+
+app.get("/getAllPlants", async(req,res) => {
+
+  const plantDoc = await User.find();
+  
+  if (plantDoc){
+    console.log(plantDoc)
+    res.status(200).json(plantDoc);
+  }else{
+    res.status(400).json("Not found");
+  }
+
+});
 
 
 
